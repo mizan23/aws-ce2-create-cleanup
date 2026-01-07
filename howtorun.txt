@@ -1,0 +1,2 @@
+powershell -ExecutionPolicy Bypass -File .\cleanup-ec2.ps1
+powershell -ExecutionPolicy Bypass -File .\create-ec2.ps1
