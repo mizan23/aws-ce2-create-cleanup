@@ -47,7 +47,7 @@ function Get-UbuntuInstances {
 }
 
 # =========================
-# SHOW SCAN RESULTS (ALL)
+# SHOW SCAN RESULTS
 # =========================
 function Show-InstanceScanResults {
     param($Instances)
@@ -86,7 +86,7 @@ function Show-InstanceScanResults {
 }
 
 # =========================
-# CHECK IF ANY RUNNING EXISTS (FIXED)
+# CHECK IF ANY RUNNING EXISTS
 # =========================
 function UbuntuRunningInstancesExist {
     param($Instances)
@@ -117,7 +117,14 @@ function Create-Instance {
 
     Log INFO "Launching EC2 instance: $Name"
 
-    $userData = "#!/bin/bash`napt update -y"
+    # ---- USER DATA (Ubuntu) ----
+    $userData = @"
+#!/bin/bash
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update -y
+sudo apt-get upgrade -y
+"@
+
     $userDataBase64 = [Convert]::ToBase64String(
         [Text.Encoding]::UTF8.GetBytes($userData)
     )
